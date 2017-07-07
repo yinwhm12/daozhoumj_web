@@ -1,0 +1,37 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;daozhoumj&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../ganzhoumj-server" />
+      <root url="file://$PROJECT_DIR$/../testMongo" />
+      <root url="file://$PROJECT_DIR$/../beetest" />
+      <root url="file://$PROJECT_DIR$/../testBee" />
+      <root url="file://$PROJECT_DIR$/../src" />
+      <root url="file://$PROJECT_DIR$/../mgweb" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../daozhou-mahjong-server" />
+      <root url="file://$PROJECT_DIR$/../gotest" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../server" />
+      <root url="file://$PROJECT_DIR$/../leafserver" />
+      <root url="file://$PROJECT_DIR$/../leaf" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../ganzhoumj-server" />
+      <root url="file://$PROJECT_DIR$/../testMongo" />
+      <root url="file://$PROJECT_DIR$/../beetest" />
+      <root url="file://$PROJECT_DIR$/../testBee" />
+      <root url="file://$PROJECT_DIR$/../src" />
+      <root url="file://$PROJECT_DIR$/../mgweb" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../daozhou-mahjong-server" />
+      <root url="file://$PROJECT_DIR$/../gotest" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../server" />
+      <root url="file://$PROJECT_DIR$/../leafserver" />
+      <root url="file://$PROJECT_DIR$/../leaf" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
