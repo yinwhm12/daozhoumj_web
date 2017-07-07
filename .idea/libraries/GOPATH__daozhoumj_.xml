@@ -6,6 +6,7 @@
       <root url="file://$PROJECT_DIR$/../beetest" />
       <root url="file://$PROJECT_DIR$/../testBee" />
       <root url="file://$PROJECT_DIR$/../src" />
+      <root url="file://$PROJECT_DIR$/../beego-demo" />
       <root url="file://$PROJECT_DIR$/../mgweb" />
       <root url="file://$PROJECT_DIR$/../gopkg.in" />
       <root url="file://$PROJECT_DIR$/../daozhou-mahjong-server" />
@@ -14,6 +15,7 @@
       <root url="file://$PROJECT_DIR$/../server" />
       <root url="file://$PROJECT_DIR$/../leafserver" />
       <root url="file://$PROJECT_DIR$/../leaf" />
+      <root url="file://$PROJECT_DIR$/../beego-mgo" />
     </CLASSES>
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../ganzhoumj-server" />
@@ -21,6 +23,7 @@
       <root url="file://$PROJECT_DIR$/../beetest" />
       <root url="file://$PROJECT_DIR$/../testBee" />
       <root url="file://$PROJECT_DIR$/../src" />
+      <root url="file://$PROJECT_DIR$/../beego-demo" />
       <root url="file://$PROJECT_DIR$/../mgweb" />
       <root url="file://$PROJECT_DIR$/../gopkg.in" />
       <root url="file://$PROJECT_DIR$/../daozhou-mahjong-server" />
@@ -29,6 +32,7 @@
       <root url="file://$PROJECT_DIR$/../server" />
       <root url="file://$PROJECT_DIR$/../leafserver" />
       <root url="file://$PROJECT_DIR$/../leaf" />
+      <root url="file://$PROJECT_DIR$/../beego-mgo" />
     </SOURCES>
     <excluded>
       <root url="file://$PROJECT_DIR$" />

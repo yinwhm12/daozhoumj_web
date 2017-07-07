@@ -147,6 +147,61 @@
                 }
             }
         },
+        "/testUser/": {
+            "post": {
+                "tags": [
+                    "testUser"
+                ],
+                "description": "create users",
+                "operationId": "TestMongo.CreateUser",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user information",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TestUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} models.TestUser.ID"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/testUser/{id}": {
+            "get": {
+                "tags": [
+                    "testUser"
+                ],
+                "description": "get user by id",
+                "operationId": "TestMongo.GetUser",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "true",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.TestUser"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            }
+        },
         "/user/": {
             "get": {
                 "tags": [
@@ -356,6 +411,21 @@
                     "type": "string"
                 },
                 "Gender": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TestUser": {
+            "title": "TestUser",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "pwd": {
                     "type": "string"
                 }
             }

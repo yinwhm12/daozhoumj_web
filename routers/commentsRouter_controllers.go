@@ -47,6 +47,22 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"],
+		beego.ControllerComments{
+			Method: "Post",
+			Router: `/`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"],
+		beego.ControllerComments{
+			Method: "Get",
+			Router: `/:id`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
 			Method: "Post",
