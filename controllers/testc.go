@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"daozhoumj/models/bean"
 	"daozhoumj/models"
+	"fmt"
 )
 
 type TestMongo struct {
@@ -50,6 +51,8 @@ func (c *TestMongo)Get()  {
 			c.RespJSON(bean.CODE_Forbidden, err.Error())
 			return
 		}
+		fmt.Println("user=",user)
+		fmt.Println("user=",user.ID)
 		c.RespJSONData(user)
 	}else {
 		c.RespJSON(bean.CODE_Forbidden,nil)

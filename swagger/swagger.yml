@@ -276,9 +276,9 @@ definitions:
     title: TestUser
     type: object
     properties:
-      ID:
-        type: string
       Name:
+        type: string
+      id:
         type: string
       pwd:
         type: string

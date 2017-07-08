@@ -419,10 +419,10 @@
             "title": "TestUser",
             "type": "object",
             "properties": {
-                "ID": {
+                "Name": {
                     "type": "string"
                 },
-                "Name": {
+                "id": {
                     "type": "string"
                 },
                 "pwd": {

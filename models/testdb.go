@@ -6,7 +6,7 @@ import (
 )
 
 type TestUser struct {
-	ID string `bson:"_id"	json:"_id,omitempty"`
+	ID string `bson:"_id" json:"id,omitempty"`
 	Name string `bson:"name"	json:"name,omitempty"`
 	Pwd string	`bson:"pwd" json:"pwd,omitempty"`
 }
@@ -32,7 +32,7 @@ func FindUserById(id string)(testUser *TestUser, err error)  {
 	return testUser, nil
 }
 
-func ValidateUser(name, pwd string) error  {
+func ValidateUser1(name, pwd string) error  {
 	conn := mongodb.Conn()
 	defer conn.Close()
 
