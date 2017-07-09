@@ -62,6 +62,16 @@ func GetUserById(id string) (user *UserData, err error)  {
 	return
 }
 
+//func GetUserIdByToken(token string)(uid string, err error)  {
+//	//conn := mongodb.Conn()
+//	//defer conn.Close()
+//	//
+//	//c := conn.DB("").C("users")
+//	//var user UserData
+//	//c.Find(bson.M{""})
+//	user, err :=GetUserByToken(token)
+//}
+
 func GetUserByToken(token string)(user *UserData,err error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()
@@ -77,5 +87,14 @@ func UpdatePassword(id,oldPwd, newPwd string) error  {
 
 	c := conn.DB("").C("users")
 	err := c.Update(bson.M{"_id":id,"password":oldPwd},bson.M{"$set":bson.M{"password":newPwd}})
+	return err
+}
+
+func UpdateToken(token string,name,pwd string) error  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("users")
+	err := c.Update(bson.M{"name": name, "password": pwd},bson.M{"$set":bson.M{"token":token}})
 	return err
 }

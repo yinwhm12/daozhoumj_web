@@ -113,6 +113,14 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
+			Method: "TokenLogin",
+			Router: `/checkToken`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
+		beego.ControllerComments{
 			Method: "Logout",
 			Router: `/logout`,
 			AllowHTTPMethods: []string{"get"},

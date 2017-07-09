@@ -3,26 +3,53 @@ package controllers
 import (
 	"daozhoumj/models"
 
-	"github.com/astaxie/beego"
+	"daozhoumj/models/client"
+	"encoding/json"
+	"net/http"
+	"daozhoumj/client_info"
+	"daozhoumj/client_info/tokenBean"
 )
 
 // Operations about Users
 type UserController struct {
-	beego.Controller
+	BaseController
 }
 
 // @Title CreateUser
 // @Description create users
-// @Param	body		body 	models.User	true		"body for user content"
-// @Success 200 {int} models.User.Id
+// @Param	body		body 	models.UserData	true		"body for user content"
+// @Success 200 {object} client.LoginSuccessOutPut
 // @Failure 403 body is empty
 // @router / [post]
 func (u *UserController) Post() {
-	//var user models.User
-	//json.Unmarshal(u.Ctx.Input.RequestBody, &user)
-	//uid := models.AddUser(user)
-	//u.Data["json"] = map[string]string{"uid": uid}
-	//u.ServeJSON()
+	var v client.CreateUser
+	err := json.Unmarshal(u.Ctx.Input.RequestBody,&v); if err != nil{
+		u.RespJSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	user, err := models.ValidateUser(v.Name, v.Password)
+	if err != nil{
+		u.RespJSON(http.StatusBadRequest, "帐号信息有误!")
+		return
+	}
+	token, err := client_info.CreateToken(v.Name)
+	if err != nil{
+		u.RespJSON(http.StatusBadRequest,"token error")
+		return
+	}
+
+	err = models.UpdateToken(token, v.Name,v.Password)
+	if err != nil{
+		u.RespJSON(http.StatusBadRequest,err.Error())
+		return
+	}
+
+	user.Password = ""
+	v.Password = ""
+
+	u.Ctx.ResponseWriter.Header().Add("Auth",token)
+	u.RespJSON(http.StatusOK,client.LoginSuccessOutPut{user.ID,user.UserName,user.Token})
+
 }
 
 // @Title GetAll
@@ -105,6 +132,33 @@ func (u *UserController) Login() {
 		u.Data["json"] = "user not exist"
 	}
 	u.ServeJSON()
+}
+
+// @Title token Login
+// @Param token	query	string	true
+// @Success 200	{string}	login	success
+// @Failure 403 token out of date
+// @router /checkToken [get]
+func (u *UserController) TokenLogin()  {
+	var tokenLogin	client.TokenLogin
+	err := json.Unmarshal(u.Ctx.Input.RequestBody,&tokenLogin)
+	if err != nil{
+		u.RespJSON(http.StatusBadRequest,"token 无效!")
+		return
+	}
+	tokenFlag := client_info.ValidateToken(tokenLogin.Token)
+	if tokenFlag == tokenBean.TOKEN_OK{
+		tokenString, err := client_info.CreateToken(tokenLogin.Token)
+		if err != nil{
+			u.RespJSON(http.StatusBadRequest,"信息异常!")
+			return
+		}
+		tokenLogin.Token = tokenString
+		u.RespJSON(http.StatusOK,tokenLogin)
+	}else {
+		u.RespJSON(http.StatusBadRequest,"信息失效，请重新登录!")
+
+	}
 }
 
 // @Title logout

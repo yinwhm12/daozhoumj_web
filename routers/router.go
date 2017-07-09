@@ -11,6 +11,7 @@ import (
 	"daozhoumj/controllers"
 
 	"github.com/astaxie/beego"
+	"daozhoumj/filters"
 )
 
 func init() {
@@ -33,4 +34,6 @@ func init() {
 	),
 	)
 	beego.AddNamespace(ns)
+
+	beego.InsertFilter("/v1/*", beego.BeforeRouter, filters.AuthLogin, true) // 验证登陆
 }
