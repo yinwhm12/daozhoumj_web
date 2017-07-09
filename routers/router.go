@@ -15,6 +15,7 @@ import (
 
 func init() {
 	ns := beego.NewNamespace("/v1",
+		beego.NSRouter("/*",&controllers.BaseController{},"options:Options"),
 		beego.NSNamespace("/object",
 			beego.NSInclude(
 				&controllers.ObjectController{},
