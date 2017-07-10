@@ -1,7 +1,6 @@
 <component name="libraryTable">
   <library name="GOPATH &lt;daozhoumj&gt;">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../catw" />
       <root url="file://$PROJECT_DIR$/../mj" />
       <root url="file://$PROJECT_DIR$/../gopkg.in" />
       <root url="file://$PROJECT_DIR$/../test" />
@@ -11,10 +10,10 @@
       <root url="file://$PROJECT_DIR$/../socketT" />
       <root url="file://$PROJECT_DIR$/../server" />
       <root url="file://$PROJECT_DIR$/../goc2p" />
+      <root url="file://$PROJECT_DIR$/../catw" />
       <root url="file://$PROJECT_DIR$/../gotest" />
     </CLASSES>
     <SOURCES>
-      <root url="file://$PROJECT_DIR$/../catw" />
       <root url="file://$PROJECT_DIR$/../mj" />
       <root url="file://$PROJECT_DIR$/../gopkg.in" />
       <root url="file://$PROJECT_DIR$/../test" />
@@ -24,6 +23,7 @@
       <root url="file://$PROJECT_DIR$/../socketT" />
       <root url="file://$PROJECT_DIR$/../server" />
       <root url="file://$PROJECT_DIR$/../goc2p" />
+      <root url="file://$PROJECT_DIR$/../catw" />
       <root url="file://$PROJECT_DIR$/../gotest" />
     </SOURCES>
     <excluded>

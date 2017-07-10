@@ -97,6 +97,25 @@ paths:
           description: '{string} delete success!'
         "403":
           description: objectId is empty
+  /player/add:
+    post:
+      tags:
+      - player
+      description: Logs user into the system
+      operationId: PlayerController.Login
+      parameters:
+      - in: body
+        name: body
+        description: body for user content
+        required: true
+        schema:
+          $ref: '#/definitions/client.CreateSession'
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/.ok'
+        "403":
+          description: user not exist
   /testUser/:
     post:
       tags:
@@ -261,6 +280,8 @@ paths:
         "200":
           description: '{string} logout success'
 definitions:
+  .ok:
+    type: object
   client.CreateSession:
     title: CreateSession
     type: object

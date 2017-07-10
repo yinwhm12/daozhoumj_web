@@ -16,3 +16,8 @@ type TokenLogin	struct {
 	Name	string	`json:"name,omitempty"`
 	Token	string	`json:"token,omitempty"`
 }
+
+type TestPlayer struct {
+	NickName string	`json:"nick_name,omitempty"`
+	
+}

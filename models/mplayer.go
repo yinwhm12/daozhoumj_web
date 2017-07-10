@@ -7,7 +7,7 @@ import (
 
 //模拟玩家 信息
 type Player struct {
-	ID	bson.ObjectId	`bson:"_id" json:"id,omitempty"` //通过 ID = bson.NewObjectId() 插入
+	ID	string	`bson:"_id" json:"id,omitempty"` //通过 ID = bson.NewObjectId() 插入
 	NickName	string	`bson:"nick_name" json:"nick_name,omitempty"`
 	Sex	int	`bson:"sex" json:"sex,omitempty"` //1为男性 0为女性
 	GamePoint	int 	`bson:"game_point" json:"game_point,omitempty"` //游戏积分
@@ -19,6 +19,15 @@ type Player struct {
 	Image	string	`bson:"image" json:"image,omitempty"` //头像url
 	
 	IsBadPlayer	int	`bson:"is_bad_player" json:"is_bad_player,omitempty"`//是否是黑名单玩家 1为黑名单 0否
+}
+
+func AddPlayer(p *Player)error  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("player")
+	err := c.Insert(p)
+	return err
 }
 
 func GetAllPlayers() (p []Player,err error)  {
