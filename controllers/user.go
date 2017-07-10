@@ -17,12 +17,12 @@ type UserController struct {
 
 // @Title CreateUser
 // @Description create users
-// @Param	body		body 	models.UserData	true		"body for user content"
+// @Param	body		body 	client.CreateSession	true		"body for user content"
 // @Success 200 {object} client.LoginSuccessOutPut
 // @Failure 403 body is empty
 // @router / [post]
 func (u *UserController) Post() {
-	var v client.CreateUser
+	var v client.CreateSession
 	err := json.Unmarshal(u.Ctx.Input.RequestBody,&v); if err != nil{
 		u.RespJSON(http.StatusBadRequest, err.Error())
 		return
@@ -48,7 +48,7 @@ func (u *UserController) Post() {
 	v.Password = ""
 
 	u.Ctx.ResponseWriter.Header().Add("Auth",token)
-	u.RespJSON(http.StatusOK,client.LoginSuccessOutPut{user.ID,user.UserName,user.Token})
+	u.RespJSON(http.StatusOK,client.LoginSuccessOutPut{user.ID,user.Name,user.Token})
 
 }
 
@@ -118,20 +118,35 @@ func (u *UserController) Delete() {
 
 // @Title Login
 // @Description Logs user into the system
-// @Param	username		query 	string	true		"The username for login"
-// @Param	password		query 	string	true		"The password for login"
-// @Success 200 {string} login success
+// @Param	body		body 	client.CreateSession	true		"body for user content"
+// @Success 200 {object} client.LoginSuccessOutPut
 // @Failure 403 user not exist
-// @router /login [get]
+// @router /login [post]
 func (u *UserController) Login() {
-	username := u.GetString("username")
-	password := u.GetString("password")
-	if models.Login(username, password) {
-		u.Data["json"] = "login success"
-	} else {
-		u.Data["json"] = "user not exist"
+	var v client.CreateSession
+	err := json.Unmarshal(u.Ctx.Input.RequestBody,&v); if err != nil{
+		u.RespJSON(http.StatusBadRequest, err.Error())
+		return
 	}
-	u.ServeJSON()
+	user, err := models.ValidateUser(v.Name, v.Password)
+	if err != nil{
+		u.RespJSON(http.StatusBadRequest, "帐号信息有误!")
+		return
+	}
+	token, err := client_info.CreateToken(v.Name)
+	if err != nil{
+		u.RespJSON(http.StatusBadRequest,"token error")
+		return
+	}
+	err = models.UpdateToken(token, v.Name,v.Password)
+	if err != nil{
+		u.RespJSON(http.StatusBadRequest,err.Error())
+		return
+	}
+	user.Password = ""
+	v.Password = ""
+	u.Ctx.ResponseWriter.Header().Add("Auth",token)
+	u.RespJSON(http.StatusOK,client.LoginSuccessOutPut{user.ID,user.Name,user.Token})
 }
 
 // @Title token Login

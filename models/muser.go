@@ -9,18 +9,25 @@ import (
 
 type UserData struct {
 	ID	string	`bson:"_id" json:"id,omitempty"`
-	UserName	string	`bson:"user_name json:"user_name,omitempty""`
+	Name	string    `bson:"name" json:"name,omitempty"`
 	Password	string	`bson:"password" json:"password,omitempty"`
 	CreatedTime	int	`bson:"created_time" json:"created_time,omitempty"`
-	Token	string	`bson:"token"	json:"token,omitempty"`
+	Token	string	`bson:"token" json:"token,omitempty"`
+	ProxyClass	int	`bson:"proxy_class" json:"proxy_class,omitempty"`//代理级别 1为一级 2为二级 0为玩家
+
+	LeftCards	int	`bson:"left_cards" json:"left_cards,omitempty"` //剩下卡的数量
+	SoldCards	int	`bson:"sold_cards" json:"sold_cards,omitempty"` //售出卡的数量
+	RechargeTimes	int	`bson:"recharge_times" json:"recharge_times,omitempty"` //充卡次数
 }
+
+
 
 func ValidateUser(name,pwd string)(user *UserData, err error)  {
 	conn := mongodb.Conn()
 	defer  conn.Close()
 
 	c := conn.DB("").C("users")
-	err = c.Find(bson.M{"user_name": name, "password": pwd}).One(&user)
+	err = c.Find(bson.M{"name": name, "password": pwd}).One(&user)
 	return
 }
 
@@ -45,7 +52,7 @@ func AddUser(name,pwd string) error {
 	}
 	user := UserData{
 		ID: strconv.Itoa(count+1),
-		UserName:name,
+		Name:name,
 		Password: pwd,
 		CreatedTime: int(time.Now().Unix()),
 	}

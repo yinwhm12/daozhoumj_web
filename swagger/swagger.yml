@@ -153,10 +153,11 @@ paths:
         description: body for user content
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/client.CreateSession'
       responses:
         "200":
-          description: '{int} models.User.Id'
+          schema:
+            $ref: '#/definitions/client.LoginSuccessOutPut'
         "403":
           description: body is empty
   /user/{uid}:
@@ -216,26 +217,38 @@ paths:
           description: '{string} delete success!'
         "403":
           description: uid is empty
-  /user/login:
+  /user/checkToken:
     get:
+      tags:
+      - user
+      operationId: UserController.token Login
+      parameters:
+      - in: query
+        name: token
+        description: "true"
+        type: string
+      responses:
+        "200":
+          description: "{string}\tlogin\tsuccess"
+        "403":
+          description: token out of date
+  /user/login:
+    post:
       tags:
       - user
       description: Logs user into the system
       operationId: UserController.Login
       parameters:
-      - in: query
-        name: username
-        description: The username for login
+      - in: body
+        name: body
+        description: body for user content
         required: true
-        type: string
-      - in: query
-        name: password
-        description: The password for login
-        required: true
-        type: string
+        schema:
+          $ref: '#/definitions/client.CreateSession'
       responses:
         "200":
-          description: '{string} login success'
+          schema:
+            $ref: '#/definitions/client.LoginSuccessOutPut'
         "403":
           description: user not exist
   /user/logout:
@@ -248,6 +261,24 @@ paths:
         "200":
           description: '{string} logout success'
 definitions:
+  client.CreateSession:
+    title: CreateSession
+    type: object
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+  client.LoginSuccessOutPut:
+    title: LoginSuccessOutPut
+    type: object
+    properties:
+      name:
+        type: string
+      token:
+        type: string
+      uid:
+        type: string
   models.Object:
     title: Object
     type: object
