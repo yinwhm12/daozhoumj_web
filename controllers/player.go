@@ -135,3 +135,30 @@ func (c *PlayerController)GetOneBadPlayer()  {
 	}
 	c.RespJSONDataWithTotal(p, int64(len(p)))
 }
+
+// @Title get player by id
+// @router /getAPlayer [get]
+func (c *PlayerController)GetAPlayer()  {
+	idStr := c.GetString("id")
+	fmt.Println("idstr",idStr)
+	p, err  := models.GetAPlayer(idStr)
+	if err != nil{
+		c.RespJSON(bean.CODE_Forbidden, err.Error())
+		return
+	}
+	c.RespJSONData(p)
+}
+
+// @Title add a bad player by id
+// @router /addBadPlayer [put]
+func (c *PlayerController)AddBadPlayer()  {
+	idStr := c.GetString("id")
+	fmt.Println("idstr",idStr)
+	err  := models.AddBadPlayer(idStr)
+	if err != nil{
+		c.RespJSON(bean.CODE_Forbidden, err.Error())
+		return
+	}
+	c.RespJSON(bean.CODE_Success,"ok")
+}
+

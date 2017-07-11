@@ -64,6 +64,15 @@ func GetAllPlayers() (p []Player,err error)  {
 	return
 }
 
+func GetAPlayer(id string)(p *Player, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("player")
+	err = c.FindId(bson.ObjectIdHex(id)).One(&p)
+	return
+}
+
 func GetOnePlayer(id string)(p []Player, err error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()
@@ -108,4 +117,12 @@ func GetOneBadPlayerById(id string)(p []Player, err error)  {
 	return
 }
 
+func AddBadPlayer(id string)error  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("player")
+	err := c.Update(bson.ObjectIdHex(id),bson.M{"$set":bson.M{"is_bad_player":1}})
+	return  err
+}
 

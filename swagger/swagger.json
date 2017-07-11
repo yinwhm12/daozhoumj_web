@@ -177,6 +177,14 @@
                 }
             }
         },
+        "/player/addBadPlayer": {
+            "put": {
+                "tags": [
+                    "player"
+                ],
+                "operationId": "PlayerController.add a bad player by id"
+            }
+        },
         "/player/badPlayer": {
             "get": {
                 "tags": [
@@ -191,6 +199,14 @@
                     "player"
                 ],
                 "operationId": "PlayerController.get bad players"
+            }
+        },
+        "/player/getAPlayer": {
+            "get": {
+                "tags": [
+                    "player"
+                ],
+                "operationId": "PlayerController.get player by id"
             }
         },
         "/player/getAll": {
