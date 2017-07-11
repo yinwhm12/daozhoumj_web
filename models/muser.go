@@ -13,7 +13,7 @@ type UserData struct {
 	Password	string	`bson:"password" json:"password,omitempty"`
 	CreatedTime	int	`bson:"created_time" json:"created_time,omitempty"`
 	Token	string	`bson:"token" json:"token,omitempty"`
-	ProxyClass	int	`bson:"proxy_class" json:"proxy_class,omitempty"`//代理级别 1为一级 2为二级 0为玩家
+	ProxyClass	int	`bson:"proxy_class" json:"proxy_class,omitempty"`//代理级别 1为admin总代理级 0为 普通总代代理
 
 	LeftCards	int	`bson:"left_cards" json:"left_cards,omitempty"` //剩下卡的数量
 	SoldCards	int	`bson:"sold_cards" json:"sold_cards,omitempty"` //售出卡的数量

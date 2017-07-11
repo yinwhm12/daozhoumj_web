@@ -3,11 +3,12 @@ package models
 import (
 	"daozhoumj/models/mongodb"
 	"gopkg.in/mgo.v2/bson"
+	"time"
 )
 
 //模拟玩家 信息
 type Player struct {
-	ID	string	`bson:"_id" json:"id,omitempty"` //通过 ID = bson.NewObjectId() 插入
+	ID	bson.ObjectId	`bson:"_id" json:"id,omitempty"` //通过 ID = bson.NewObjectId() 插入
 	NickName	string	`bson:"nick_name" json:"nick_name,omitempty"`
 	Sex	int	`bson:"sex" json:"sex,omitempty"` //1为男性 0为女性
 	GamePoint	int 	`bson:"game_point" json:"game_point,omitempty"` //游戏积分
@@ -30,6 +31,30 @@ func AddPlayer(p *Player)error  {
 	return err
 }
 
+func GetPlayerCounts()(total int, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("player")
+	total, err = c.Find(nil).Count()
+	return
+}
+
+func GetYesterdayIncreaseCounts()(total int, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	nTime := time.Now()
+	yesTime := nTime.AddDate(0,0,-1)
+	hadM := yesTime.Hour() * 60*60 + yesTime.Minute() *60 + yesTime.Second()
+	time0 := int(yesTime.Unix())-hadM
+	time1 := time0 + 24 * 60* 60
+
+	c := conn.DB("").C("player")
+	total, err = c.Find(bson.M{"last_game_time":bson.M{"$gte":time0,"$lte":time1}}).Count()
+	return
+}
+
 func GetAllPlayers() (p []Player,err error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()
@@ -39,12 +64,12 @@ func GetAllPlayers() (p []Player,err error)  {
 	return
 }
 
-func GetOnePlayer(id string)(p *Player, err error)  {
+func GetOnePlayer(id string)(p []Player, err error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()
 
 	c := conn.DB("").C("player")
-	err = c.FindId(id).One(&p)
+	err = c.FindId(bson.ObjectIdHex(id)).All(&p)
 	return
 }
 
@@ -74,12 +99,12 @@ func GetBadPlayersByPage(limit, offset int)(total int, p []Player, err error)  {
 	return
 }
 
-func GetOneBadPlayerById(id string)(p *Player, err error)  {
+func GetOneBadPlayerById(id string)(p []Player, err error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()
 
 	c := conn.DB("").C("player")
-	err = c.FindId(id).One(&p)
+	err = c.FindId(bson.ObjectIdHex(id)).All(&p)
 	return
 }
 

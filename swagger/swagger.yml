@@ -109,13 +109,71 @@ paths:
         description: body for user content
         required: true
         schema:
-          $ref: '#/definitions/client.CreateSession'
+          $ref: '#/definitions/models.Player'
       responses:
         "200":
           schema:
             $ref: '#/definitions/.ok'
         "403":
           description: user not exist
+  /player/badPlayer:
+    get:
+      tags:
+      - player
+      operationId: PlayerController.get a bad player
+  /player/badPlayers:
+    get:
+      tags:
+      - player
+      operationId: PlayerController.get bad players
+  /player/getAll:
+    get:
+      tags:
+      - player
+      operationId: PlayerController.get all players
+      parameters:
+      - in: path
+        name: offset
+        description: page offset
+        required: true
+        type: integer
+        format: int64
+      - in: path
+        name: limit
+        description: page limit
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: "{int,[]object} total\t[]models.player\ttrue\t\"return\""
+        "403":
+          description: empty
+  /player/getOne:
+    get:
+      tags:
+      - player
+      operationId: PlayerController.get one player
+  /player/increaseCount:
+    get:
+      tags:
+      - player
+      operationId: PlayerController.yesterday increase players
+      responses:
+        "200":
+          description: '{int}'
+        "403":
+          description: empty
+  /player/playerCount:
+    get:
+      tags:
+      - player
+      operationId: PlayerController.all players
+      responses:
+        "200":
+          description: '{int}'
+        "403":
+          description: empty
   /testUser/:
     post:
       tags:
@@ -155,12 +213,14 @@ paths:
     get:
       tags:
       - user
-      description: get all Users
-      operationId: UserController.GetAll
+      description: get user by uid
+      operationId: UserController.Get
       responses:
         "200":
           schema:
             $ref: '#/definitions/models.User'
+        "403":
+          description: :uid is empty
     post:
       tags:
       - user
@@ -180,23 +240,6 @@ paths:
         "403":
           description: body is empty
   /user/{uid}:
-    get:
-      tags:
-      - user
-      description: get user by uid
-      operationId: UserController.Get
-      parameters:
-      - in: path
-        name: uid
-        description: The key for staticblock
-        required: true
-        type: string
-      responses:
-        "200":
-          schema:
-            $ref: '#/definitions/models.User'
-        "403":
-          description: :uid is empty
     put:
       tags:
       - user
@@ -236,6 +279,16 @@ paths:
           description: '{string} delete success!'
         "403":
           description: uid is empty
+  /user/all:
+    get:
+      tags:
+      - user
+      description: get all Users
+      operationId: UserController.GetAll
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.User'
   /user/checkToken:
     get:
       tags:
@@ -280,6 +333,8 @@ paths:
         "200":
           description: '{string} logout success'
 definitions:
+  .ObjectId:
+    type: object
   .ok:
     type: object
   client.CreateSession:
@@ -309,6 +364,40 @@ definitions:
       PlayerName:
         type: string
       Score:
+        type: integer
+        format: int64
+  models.Player:
+    title: Player
+    type: object
+    properties:
+      bought_room_cards:
+        type: integer
+        format: int64
+      game_point:
+        type: integer
+        format: int64
+      game_record:
+        type: integer
+        format: int64
+      id:
+        $ref: '#/definitions/bson.ObjectId'
+      image:
+        type: string
+      is_bad_player:
+        type: integer
+        format: int64
+      is_proxy:
+        type: integer
+        format: int64
+      last_game_time:
+        type: integer
+        format: int64
+      nick_name:
+        type: string
+      sex:
+        type: integer
+        format: int64
+      used_room_cards:
         type: integer
         format: int64
   models.Profile:

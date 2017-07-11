@@ -19,15 +19,19 @@ var AuthLogin = func(ctx *context.Context) {
 		return
 	}
 	token := ctx.Request.Header.Get("Authorization")
+	//fmt.Println("token===",token)
 	if token != ""{
 		flag := client_info.ValidateToken(token)
+		//fmt.Println("flag==",flag)
 		if flag == tokenBean.TOKEN_OK{
-			user, err :=models.GetUserByToken("token")
+			user, err :=models.GetUserByToken(token)
+			//fmt.Println("user",user)
 			if err != nil{
 				AllowCrows(ctx,err)
 				return
 			}
 			ctx.Input.SetData("uid", user.ID)
+			//fmt.Println("user_id",user.ID)
 		}else if flag == tokenBean.TOKEN_OVERTIME{
 			//errA = errors.New("token 失效!")
 			AllowCrows(ctx,errors.New("token out of date"))

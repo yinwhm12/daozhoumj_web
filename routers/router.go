@@ -9,9 +9,8 @@ package routers
 
 import (
 	"daozhoumj/controllers"
-
-	"github.com/astaxie/beego"
 	"daozhoumj/filters"
+	"github.com/astaxie/beego"
 )
 
 func init() {

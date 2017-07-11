@@ -55,6 +55,54 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "PlayerCounts",
+			Router: `/playerCount`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "IncreaseCount",
+			Router: `/increaseCount`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "GetAll",
+			Router: `/getAll`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "GetOne",
+			Router: `/getOne`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "GetBadPlayers",
+			Router: `/badPlayers`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "GetOneBadPlayer",
+			Router: `/badPlayer`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"],
 		beego.ControllerComments{
 			Method: "Post",
@@ -82,7 +130,7 @@ func init() {
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
 			Method: "GetAll",
-			Router: `/`,
+			Router: `/all`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
@@ -90,7 +138,7 @@ func init() {
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
 			Method: "Get",
-			Router: `/:uid`,
+			Router: `/`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})

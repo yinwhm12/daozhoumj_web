@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"daozhoumj/client_info"
 	"daozhoumj/client_info/tokenBean"
+	"daozhoumj/models/bean"
+	"fmt"
 )
 
 // Operations about Users
@@ -55,7 +57,7 @@ func (u *UserController) Post() {
 // @Title GetAll
 // @Description get all Users
 // @Success 200 {object} models.User
-// @router / [get]
+// @router /all [get]
 func (u *UserController) GetAll() {
 	//users := models.GetAllUsers()
 	//u.Data["json"] = users
@@ -64,21 +66,21 @@ func (u *UserController) GetAll() {
 
 // @Title Get
 // @Description get user by uid
-// @Param	uid		path 	string	true		"The key for staticblock"
 // @Success 200 {object} models.User
 // @Failure 403 :uid is empty
-// @router /:uid [get]
+// @router / [get]
 func (u *UserController) Get() {
-	//uid := u.GetString(":uid")
-	//if uid != "" {
-	//	user, err := models.GetUser(uid)
-	//	if err != nil {
-	//		u.Data["json"] = err.Error()
-	//	} else {
-	//		u.Data["json"] = user
-	//	}
-	//}
-	//u.ServeJSON()
+	fmt.Println("uid",u.Uid())
+	user, err := models.GetUserById(u.Uid())
+	fmt.Println("userget",user)
+	if err != nil{
+		u.RespJSON(bean.CODE_Forbidden,err.Error())
+		return
+	}
+	user.Password = ""
+	user.Token = ""
+	u.RespJSONData(user)
+
 }
 
 // @Title Update
@@ -146,7 +148,7 @@ func (u *UserController) Login() {
 	user.Password = ""
 	v.Password = ""
 	u.Ctx.ResponseWriter.Header().Add("Auth",token)
-	u.RespJSON(http.StatusOK,client.LoginSuccessOutPut{user.ID,user.Name,user.Token})
+	u.RespJSON(http.StatusOK,client.LoginSuccessOutPut{user.ID,user.Name,token})
 }
 
 // @Title token Login
