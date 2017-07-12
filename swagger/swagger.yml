@@ -184,6 +184,31 @@ paths:
           description: '{int}'
         "403":
           description: empty
+  /proxy/changeClass:
+    put:
+      tags:
+      - proxy
+      operationId: ProxyController.change proxy class
+  /proxy/getProxyCount:
+    get:
+      tags:
+      - proxy
+      operationId: ProxyController.get kinds of proxy counts
+  /proxy/searchId:
+    get:
+      tags:
+      - proxy
+      operationId: ProxyController.search which id proxy
+  /proxy/searchOne:
+    get:
+      tags:
+      - proxy
+      operationId: ProxyController.search one player(all proxy)
+  /proxy/showProxy:
+    get:
+      tags:
+      - proxy
+      operationId: ProxyController.page show which proxy class you want
   /testUser/:
     post:
       tags:
@@ -389,6 +414,9 @@ definitions:
       game_record:
         type: integer
         format: int64
+      has_cards_count:
+        type: integer
+        format: int64
       id:
         $ref: '#/definitions/bson.ObjectId'
       image:
@@ -397,6 +425,9 @@ definitions:
         type: integer
         format: int64
       is_proxy:
+        type: integer
+        format: int64
+      join_proxy_time:
         type: integer
         format: int64
       last_game_time:

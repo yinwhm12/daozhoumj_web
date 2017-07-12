@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-	"fmt"
 	"daozhoumj/models"
 	"time"
 	"gopkg.in/mgo.v2/bson"
@@ -21,7 +20,7 @@ type PlayerController struct {
 // @Failure 403 user not exist
 // @router /add [post]
 func (c *PlayerController) AddPlayer()  {
-	fmt.Println("in---")
+	//fmt.Println("in---")
 	var v models.Player
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); if err != nil{
 		c.RespJSON(http.StatusBadRequest, err.Error())
@@ -93,7 +92,7 @@ func (c *PlayerController)GetAll()  {
 // @router /getOne [get]
 func (c *PlayerController)GetOne()  {
 	idStr := c.GetString("id")
-	fmt.Println("idstr",idStr)
+	//fmt.Println("idstr",idStr)
 	p, err  := models.GetOnePlayer(idStr)
 	if err != nil{
 		 c.RespJSON(bean.CODE_Forbidden, err.Error())
@@ -127,7 +126,7 @@ func (c *PlayerController)GetBadPlayers()  {
 // @router /badPlayer [get]
 func (c *PlayerController)GetOneBadPlayer()  {
 	idStr := c.GetString("id")
-	fmt.Println("idstr",idStr)
+	//fmt.Println("idstr",idStr)
 	p, err  := models.GetOneBadPlayerById(idStr)
 	if err != nil{
 		c.RespJSON(bean.CODE_Forbidden, err.Error())
@@ -140,20 +139,25 @@ func (c *PlayerController)GetOneBadPlayer()  {
 // @router /getAPlayer [get]
 func (c *PlayerController)GetAPlayer()  {
 	idStr := c.GetString("id")
-	fmt.Println("idstr",idStr)
+	//fmt.Println("idstr",idStr)
 	p, err  := models.GetAPlayer(idStr)
+	//fmt.Println("pppp",p)
 	if err != nil{
 		c.RespJSON(bean.CODE_Forbidden, err.Error())
 		return
 	}
-	c.RespJSONData(p)
+	if len(p) == 1{
+		c.RespJSONData(p)
+	}else{
+		c.RespJSON(bean.CODE_Params_Err, "数据异常!")
+	}
 }
 
 // @Title add a bad player by id
 // @router /addBadPlayer [put]
 func (c *PlayerController)AddBadPlayer()  {
 	idStr := c.GetString("id")
-	fmt.Println("idstr",idStr)
+	//fmt.Println("idstr",idStr)
 	err  := models.AddBadPlayer(idStr)
 	if err != nil{
 		c.RespJSON(bean.CODE_Forbidden, err.Error())

@@ -119,6 +119,62 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"],
+		beego.ControllerComments{
+			Method: "ChangeClass",
+			Router: `/changeClass`,
+			AllowHTTPMethods: []string{"put"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"],
+		beego.ControllerComments{
+			Method: "ShowProxy",
+			Router: `/showProxy`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"],
+		beego.ControllerComments{
+			Method: "SearchId",
+			Router: `/searchId`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"],
+		beego.ControllerComments{
+			Method: "SearchOne",
+			Router: `/searchOne`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"],
+		beego.ControllerComments{
+			Method: "GetProxyCount",
+			Router: `/getProxyCount`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:SoldCardsController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:SoldCardsController"],
+		beego.ControllerComments{
+			Method: "GetMyTime",
+			Router: `/getMyTime`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:SoldCardsController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:SoldCardsController"],
+		beego.ControllerComments{
+			Method: "GetToTime",
+			Router: `/getToTime`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:TestMongo"],
 		beego.ControllerComments{
 			Method: "Post",

@@ -20,6 +20,8 @@ type Player struct {
 	Image	string	`bson:"image" json:"image,omitempty"` //头像url
 	
 	IsBadPlayer	int	`bson:"is_bad_player" json:"is_bad_player,omitempty"`//是否是黑名单玩家 1为黑名单 0否
+	JoinProxyTime	int	`bson:"join_proxy_time" json:"join_proxy_time,omitempty"` //加入代理的时间
+	HasCardsCount	int	`bson:"has_cards_count" json:"has_cards_count,omitempty"`//持卡数
 }
 
 func AddPlayer(p *Player)error  {
@@ -64,12 +66,12 @@ func GetAllPlayers() (p []Player,err error)  {
 	return
 }
 
-func GetAPlayer(id string)(p *Player, err error)  {
+func GetAPlayer(id string)(p []Player, err error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()
 
 	c := conn.DB("").C("player")
-	err = c.FindId(bson.ObjectIdHex(id)).One(&p)
+	err = c.Find(bson.M{"_id":bson.ObjectIdHex(id),"is_bad_player":0}).All(&p)
 	return
 }
 
@@ -126,3 +128,62 @@ func AddBadPlayer(id string)error  {
 	return  err
 }
 
+//
+func GetPlayerInfoById(id string)(p []Player, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("player")
+	err = c.Find(bson.M{"_id":bson.ObjectIdHex(id),"is_proxy":bson.M{"$in":[]int{1,2}}}).All(&p)
+	return
+}
+
+//代理 级别 修改 也可做添加代理
+func UpdateProxyClassById(id string,class int)(err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("player")
+	err = c.Update(bson.ObjectIdHex(id),bson.M{"$set":bson.M{"is_proxy":class}})
+	return
+}
+
+//获取所有(1 2 ...)的代理
+func GetWhichProxy(limit, offset, class int)(total int, p []Player, err error)  {
+	conn := mongodb.Conn()
+	defer  conn.Close()
+
+	c := conn.DB("").C("player")
+	if class == 1||class == 2{//一级代理
+		total, err = c.Find(bson.M{"is_proxy":class}).Count()
+		if err != nil {
+			return -1, nil, err
+		}
+		err = c.Find(bson.M{"is_proxy":class}).Skip(offset).Limit(limit).All(&p)
+	}else{//所有代理
+		total, err = c.Find(bson.M{"is_proxy":bson.M{"$in":[]int{1,2}}}).Count()
+		if err != nil {
+			return -1, nil, err
+		}
+		err = c.Find(bson.M{"is_proxy":bson.M{"$in":[]int{1,2}}}).Skip(offset).Limit(limit).All(&p)
+	}
+	return
+}
+
+//获取各个代理的数量
+func GetAllProxyCount()(all, c1,c2 int, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("player")
+	all, err = c.Find(bson.M{"is_proxy":bson.M{"$in":[]int{1,2}}}).Count()
+	if err != nil {
+		return -1,-1,-1,err
+	}
+	c1, err = c.Find(bson.M{"is_proxy":1}).Count()
+	if err != nil{
+		return -1,-1,-1,err
+	}
+	c2= all - c1
+	return all, c1,c2,nil
+}

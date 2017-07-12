@@ -12,6 +12,7 @@ type SoldRecords struct {
 	ToPlayerId	string	`bson:"to_player_id" json:"to_player_id,omitempty"` //买卡人ID 即显示中 玩家ID
 	PlayerNickName	string	`bson:"player_nick_name" json:"player_nick_name,omitempty"`//玩家的昵称
 	PlayerProxy	int	`bson:"player_proxy" json:"player_proxy,omitempty"` //玩家的代理级别
+	SoldType	int	`bson:"sold_type" json:"sold_type,omitempty"` //交易类型 1为出售 0为买入
 
 	SoldCounts	int	`bson:"sold_counts" json:"sold_counts,omitempty"` //售卡数量
 	SoldState	int	`bson:"sold_state" json:"sold_state,omitempty"` //售卡 状态 1位 成功 0为失败
@@ -54,4 +55,29 @@ func GetSoldRecordPageByTime(limit, offset int,fromPlayerId string,t []int)(tota
 	//total, err = c.Find(bson.M{"from_player_id":fromPlayerId,bson.M{"sold_time":bson.M{"$gte":t[0]}},bson.M{"sold_time":bson.M{"$lte":t[0]}}}).Skip(offset).Limit(limit)
 }
 
+func GetSoldRecordPageByToPlayerId(limit, offset int, toPlayerId string)(total int, s []SoldRecords,err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
 
+	c := conn.DB("").C("soldCards")
+	total, err = c.Find(bson.M{"to_player_id":toPlayerId}).Count()
+	if err != nil{
+		return  -1, nil, err
+	}
+	err = c.Find(bson.M{"to_player_id":toPlayerId}).Skip(offset).Limit(limit).All(&s)
+	return
+}
+
+func GetSoldRecordPageByToPlayerIdTime(limit, offset int, toPlayerId string, t []int)(total int, s []SoldRecords, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("").C("soldCards")
+	total, err = c.Find(bson.M{"to_player_id":toPlayerId,"sold_time":bson.M{"$gte":t[0],"$lte":t[1]}}).Count()
+	if err != nil{
+		return  -1, nil, err
+	}
+	err = c.Find(bson.M{"to_player_id":toPlayerId,"sold_time":bson.M{"$gte":t[0],"$lte":t[1]}}).Skip(offset).Limit(limit).All(&s)
+	return
+
+}

@@ -36,6 +36,11 @@ func init() {
 				&controllers.PlayerController{},
 			),
 		),
+		beego.NSNamespace("/proxy",
+			beego.NSInclude(
+				&controllers.ProxyController{},
+			),
+		),
 
 	)
 	beego.AddNamespace(ns)
