@@ -124,7 +124,7 @@ func AddBadPlayer(id string)error  {
 	defer conn.Close()
 
 	c := conn.DB("").C("player")
-	err := c.Update(bson.ObjectIdHex(id),bson.M{"$set":bson.M{"is_bad_player":1}})
+	err := c.Update(bson.M{"_id":bson.ObjectIdHex(id)},bson.M{"$set":bson.M{"is_bad_player":1}})
 	return  err
 }
 
@@ -144,7 +144,7 @@ func UpdateProxyClassById(id string,class int)(err error)  {
 	defer conn.Close()
 
 	c := conn.DB("").C("player")
-	err = c.Update(bson.ObjectIdHex(id),bson.M{"$set":bson.M{"is_proxy":class}})
+	err = c.Update(bson.M{"_id":bson.ObjectIdHex(id)},bson.M{"$set":bson.M{"is_proxy":class}})
 	return
 }
 
@@ -154,7 +154,7 @@ func GetWhichProxy(limit, offset, class int)(total int, p []Player, err error)  
 	defer  conn.Close()
 
 	c := conn.DB("").C("player")
-	if class == 1||class == 2{//一级代理
+	if class == 1||class == 2{//一 二级代理
 		total, err = c.Find(bson.M{"is_proxy":class}).Count()
 		if err != nil {
 			return -1, nil, err

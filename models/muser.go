@@ -93,7 +93,7 @@ func UpdatePassword(id,oldPwd, newPwd string) error  {
 	defer conn.Close()
 
 	c := conn.DB("").C("users")
-	err := c.Update(bson.M{"_id":id,"password":oldPwd},bson.M{"$set":bson.M{"password":newPwd}})
+	err := c.Update(bson.M{"_id":bson.ObjectIdHex(id),"password":oldPwd},bson.M{"$set":bson.M{"password":newPwd}})
 	return err
 }
 
