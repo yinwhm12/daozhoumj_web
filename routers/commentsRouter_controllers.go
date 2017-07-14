@@ -255,4 +255,36 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"],
+		beego.ControllerComments{
+			Method: "Post",
+			Router: `/`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"],
+		beego.ControllerComments{
+			Method: "Delete",
+			Router: `/:id`,
+			AllowHTTPMethods: []string{"delete"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"],
+		beego.ControllerComments{
+			Method: "GerAllVersion",
+			Router: `/getAllVersions`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:VersionController"],
+		beego.ControllerComments{
+			Method: "GerVersionsT",
+			Router: `/getVersionsT`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }

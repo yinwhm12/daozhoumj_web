@@ -21,3 +21,8 @@ type TestPlayer struct {
 	NickName string	`json:"nick_name,omitempty"`
 	
 }
+
+type VersionJSON struct {
+	Content	string	`json:"content,omitempty"`
+	Address string	`json:"address,omitempty"`
+}

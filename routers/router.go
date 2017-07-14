@@ -41,6 +41,11 @@ func init() {
 				&controllers.ProxyController{},
 			),
 		),
+		beego.NSNamespace("/version",
+			beego.NSInclude(
+				&controllers.VersionController{},
+			),
+		),
 
 	)
 	beego.AddNamespace(ns)
