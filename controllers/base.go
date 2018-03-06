@@ -31,8 +31,8 @@ func (c *BaseController)RespJSONDataWithTotal(data interface{},total int64)  {
 	})
 }
 
-func (c *BaseController)Uid()string  {
-	return c.Ctx.Input.GetData("uid").(string)
+func (c *BaseController)Uid()int  {
+	return c.Ctx.Input.GetData("uid").(int)
 }
 
 func (c *BaseController)AllowCross()  {

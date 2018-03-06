@@ -17,16 +17,16 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:ObjectController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ObjectController"],
 		beego.ControllerComments{
-			Method: "Get",
-			Router: `/:objectId`,
+			Method: "GetAll",
+			Router: `/`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:ObjectController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ObjectController"],
 		beego.ControllerComments{
-			Method: "GetAll",
-			Router: `/`,
+			Method: "Get",
+			Router: `/:objectId`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
@@ -57,16 +57,32 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
 		beego.ControllerComments{
-			Method: "PlayerCounts",
-			Router: `/playerCount`,
+			Method: "AddBadPlayer",
+			Router: `/addBadPlayer`,
+			AllowHTTPMethods: []string{"put"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "GetOneBadPlayer",
+			Router: `/badPlayer`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
 		beego.ControllerComments{
-			Method: "IncreaseCount",
-			Router: `/increaseCount`,
+			Method: "GetBadPlayers",
+			Router: `/badPlayers`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
+		beego.ControllerComments{
+			Method: "GetAPlayer",
+			Router: `/getAPlayer`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
@@ -89,33 +105,17 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
 		beego.ControllerComments{
-			Method: "GetBadPlayers",
-			Router: `/badPlayers`,
+			Method: "IncreaseCount",
+			Router: `/increaseCount`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
 		beego.ControllerComments{
-			Method: "GetOneBadPlayer",
-			Router: `/badPlayer`,
+			Method: "PlayerCounts",
+			Router: `/playerCount`,
 			AllowHTTPMethods: []string{"get"},
-			MethodParams: param.Make(),
-			Params: nil})
-
-	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
-		beego.ControllerComments{
-			Method: "GetAPlayer",
-			Router: `/getAPlayer`,
-			AllowHTTPMethods: []string{"get"},
-			MethodParams: param.Make(),
-			Params: nil})
-
-	beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:PlayerController"],
-		beego.ControllerComments{
-			Method: "AddBadPlayer",
-			Router: `/addBadPlayer`,
-			AllowHTTPMethods: []string{"put"},
 			MethodParams: param.Make(),
 			Params: nil})
 
@@ -129,8 +129,8 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"],
 		beego.ControllerComments{
-			Method: "ShowProxy",
-			Router: `/showProxy`,
+			Method: "GetProxyCount",
+			Router: `/getProxyCount`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
@@ -153,8 +153,8 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:ProxyController"],
 		beego.ControllerComments{
-			Method: "GetProxyCount",
-			Router: `/getProxyCount`,
+			Method: "ShowProxy",
+			Router: `/showProxy`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
@@ -201,14 +201,6 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
-			Method: "GetAll",
-			Router: `/all`,
-			AllowHTTPMethods: []string{"get"},
-			MethodParams: param.Make(),
-			Params: nil})
-
-	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
-		beego.ControllerComments{
 			Method: "Get",
 			Router: `/`,
 			AllowHTTPMethods: []string{"get"},
@@ -218,7 +210,7 @@ func init() {
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
 			Method: "Put",
-			Router: `/:uid`,
+			Router: `/`,
 			AllowHTTPMethods: []string{"put"},
 			MethodParams: param.Make(),
 			Params: nil})
@@ -233,9 +225,9 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
-			Method: "Login",
-			Router: `/login`,
-			AllowHTTPMethods: []string{"post"},
+			Method: "GetAll",
+			Router: `/all`,
+			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})
 
@@ -249,8 +241,32 @@ func init() {
 
 	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
 		beego.ControllerComments{
+			Method: "Login",
+			Router: `/login`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
+		beego.ControllerComments{
+			Method: "LoginM",
+			Router: `/loginM`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
+		beego.ControllerComments{
 			Method: "Logout",
 			Router: `/logout`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["daozhoumj/controllers:UserController"] = append(beego.GlobalControllerRouter["daozhoumj/controllers:UserController"],
+		beego.ControllerComments{
+			Method: "LoginByToken",
+			Router: `/validateToken`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})

@@ -14,13 +14,13 @@ type MyCustomClaims struct {
 func CreateToken(name string)(tokenStr string, err error)  {
 	expireToken := time.Now().Add(time.Hour * 24).Unix()
 
-	key := []byte("daozhoumj@yin")
+	key := []byte("dongfengqipai@yin")
 
 	claims := MyCustomClaims{
 		name,
 		jwt.StandardClaims{
 			ExpiresAt: expireToken,
-			Issuer: "youxibi",
+			Issuer: "yin",
 		},
 	}
 
@@ -32,7 +32,7 @@ func CreateToken(name string)(tokenStr string, err error)  {
 
 func ValidateToken(tokenString string)(int)  {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte("daozhoumj@yin"), nil
+		return []byte("dongfengqipai@yin"), nil
 	})
 
 	if token.Valid {

@@ -12,6 +12,12 @@ type LoginSuccessOutPut struct {
 	Token	string	`json:"token,omitempty"`
 }
 
+type LoinManagerSuccessOutPut struct {
+	Id int `json:"id"`
+	NickName string `json:"nick_name"`
+	Token string `json:"token"`
+}
+
 type TokenLogin	struct {
 	Name	string	`json:"name,omitempty"`
 	Token	string	`json:"token,omitempty"`

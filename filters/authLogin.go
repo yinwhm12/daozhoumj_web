@@ -15,7 +15,7 @@ var AuthLogin = func(ctx *context.Context) {
 		return
 	}
 	if ctx.Request.Method == "OPTIONS"{
-		ctx.Input.SetData("uid","0")
+		ctx.Input.SetData("uid",0)
 		return
 	}
 	token := ctx.Request.Header.Get("Authorization")
@@ -24,13 +24,13 @@ var AuthLogin = func(ctx *context.Context) {
 		flag := client_info.ValidateToken(token)
 		//fmt.Println("flag==",flag)
 		if flag == tokenBean.TOKEN_OK{
-			user, err :=models.GetUserByToken(token)
+			user, err :=models.GetManagerByToken(token)
 			//fmt.Println("user",user)
 			if err != nil{
 				AllowCrows(ctx,err)
 				return
 			}
-			ctx.Input.SetData("uid", user.ID)
+			ctx.Input.SetData("uid", user.Id)
 			//fmt.Println("user_id",user.ID)
 		}else if flag == tokenBean.TOKEN_OVERTIME{
 			//errA = errors.New("token 失效!")

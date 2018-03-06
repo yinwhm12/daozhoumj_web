@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"catw/catw/models/bean"
 	"daozhoumj/models"
 	"strings"
 	"strconv"
+	"daozhoumj/models/bean"
 )
 
 type SoldCardsController struct {
