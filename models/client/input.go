@@ -32,3 +32,17 @@ type VersionJSON struct {
 	Content	string	`json:"content,omitempty"`
 	Address string	`json:"address,omitempty"`
 }
+
+//公告 添加新的
+type PublicJSON struct {
+	Message string `json:"message"`
+} 
+
+//请求 时间 翻页 数据
+type PageByTime struct {
+	Offset int `json:"offset"`
+	Limit int `json:"limit"`
+	Before int `json:"before,omitempty"`
+	After int `json:"after,omitempty"`
+
+} 

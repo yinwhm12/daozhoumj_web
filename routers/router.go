@@ -45,6 +45,10 @@ func init() {
 			beego.NSInclude(
 				&controllers.VersionController{},
 			),
+		),	beego.NSNamespace("/announcement",
+			beego.NSInclude(
+				&controllers.PublicController{},
+			),
 		),
 
 	)
