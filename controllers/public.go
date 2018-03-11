@@ -77,7 +77,7 @@ func (p *PublicController)GetAllPublics()  {
 }
 
 // @Title get some public datas by time
-// @router /publicsByTime [get]
+// @router /publicsByTime [post]
 func (p *PublicController)GetPublicsByTime()  {
 	var  jsonData client.PageByTime
 	err := json.Unmarshal(p.Ctx.Input.RequestBody, &jsonData)

@@ -46,7 +46,6 @@ func (u *UserController) Post() {
 
 	user.Password = ""
 	v.Password = ""
-
 	u.Ctx.ResponseWriter.Header().Add("Auth",token)
 	u.RespJSON(http.StatusOK,client.LoginSuccessOutPut{user.ID,user.Name,user.Token})
 

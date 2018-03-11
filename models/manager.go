@@ -56,7 +56,7 @@ func GetManagerByToken(token string)(Manager, error)  {
 	defer conn.Close()
 	c := conn.DB("ddzhu").C("manager")
 	m := new(Manager)
-	err := c.Find(bson.M{"md_pwd":token}).One(&m)
+	err := c.Find(bson.M{"token":token}).One(&m)
 	return *m, err
 }
 

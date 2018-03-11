@@ -48,20 +48,20 @@ func GetAllPublicByPage(offset, limit int)(total int,p []Public, err error){
 	if err != nil{
 		return -1, nil, err
 	}
-	err = c.Find(nil).Skip(offset).Limit(limit).All(&p)
+	err = c.Find(nil).Skip(offset).Sort("-create_time").Limit(limit).All(&p)
 	return
 }
 
-func GetPublicByPageAndTimes(limit, offset, t1,t2 int)(total int,p []Public,err error)  {
+func GetPublicByPageAndTimes(offset, limit, t1,t2 int)(total int,p []Public,err error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()
 
-	c := conn.DB("").C("version")
-	total, err = c.Find(bson.M{"created_time":bson.M{"$gte":t1,"$lte":t2}}).Count()
+	c := conn.DB("ddzhu").C("public")
+	total, err = c.Find(bson.M{"create_time":bson.M{"$gte":t1,"$lte":t2}}).Count()
 	if err != nil{
 		return -1, nil, err
 	}
-	err = c.Find(bson.M{"created_time":bson.M{"$gte":t1,"$lte":t2}}).Sort("-create_time").Skip(offset).Limit(limit).All(&p)
+	err = c.Find(bson.M{"create_time":bson.M{"$gte":t1,"$lte":t2}}).Sort("-create_time").Skip(offset).Limit(limit).All(&p)
 	return
 
 }
