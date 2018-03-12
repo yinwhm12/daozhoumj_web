@@ -38,6 +38,15 @@ func GetUsersByGameIds(gameIds []string)(users []User,err error)  {
 	return
 }
 
+//每次读取一百个玩家
+func GetLimitMoreUser(offset, limit int)(users []User, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+	c := conn.DB("ddzhu").C("user")
+	err = c.Find(nil).Sort("-_id").Skip(offset).Limit(limit).All(&users)
+	return
+}
+
 // gold 为最终的数量
 func EditUserGoldByGameId(gameId string,gold int)error  {
 	conn := mongodb.Conn()
