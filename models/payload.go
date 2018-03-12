@@ -9,4 +9,7 @@ type PayLoad struct {
 	CreateTime int `json:"create_time" bson:"create_time"`
 }
 
+//func GetPayLoadByGameId(gameId string)(ps []PayLoad, err error)  {
+//
+//}
 

@@ -3,7 +3,6 @@ package mongodb
 import (
 	"gopkg.in/mgo.v2"
 	"fmt"
-	"github.com/astaxie/beego"
 )
 
 var session *mgo.Session
@@ -13,10 +12,10 @@ func Conn()*mgo.Session  {
 }
 
 func init() {
-	url:= beego.AppConfig.String("mongodb::url")
+	//url:= beego.AppConfig.String("mongodb::url")
 	//db := beego.AppConfig.String("mongodb::db")
 	//todo test使用
-	//url := "39.107.65.67:27777"
+	url := "39.107.65.67:27777"
 	fmt.Println("----url:",url)
 	sess, err := mgo.Dial(url)
 	if err != nil{

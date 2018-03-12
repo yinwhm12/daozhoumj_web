@@ -61,3 +61,11 @@ func TestValidte(t *testing.T)  {
 	fmt.Println("user---",user)
 
 }
+
+func TestLastTime(t *testing.T)  {
+	nTime := time.Now()
+	yesTime := nTime.AddDate(0,0,-1)
+	fmt.Println("----------------y",yesTime.Unix())
+	logDay := yesTime.Format("20060102")
+	fmt.Println("-----------log:",logDay)
+}

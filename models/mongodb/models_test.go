@@ -38,4 +38,22 @@ func TestFindUser(t *testing.T)  {
 	fmt.Println(user)
 }
 
+func TestLastTime(t *testing.T)  {
+	nTime := time.Now()
+	yesTime := nTime.AddDate(0,0,-1)
+	fmt.Println("----------------y",yesTime.Unix())
+	logDay := yesTime.Format("20060102")
+	fmt.Println("-----------log:",logDay)
 
+
+}
+
+//获取当天0点的时间戳
+func TestZeroCurDay(t *testing.T)  {
+	timeStr := time.Now().Format("2006-01-02")
+	fmt.Println("timeStr:", timeStr)
+	tt, _ := time.Parse("2006-01-02", timeStr)
+	timeNumber := tt.Unix()
+	fmt.Println("timeNumber:", timeNumber)
+	
+}
