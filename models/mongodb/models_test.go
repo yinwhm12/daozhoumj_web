@@ -5,6 +5,8 @@ import (
 	"time"
 	"gopkg.in/mgo.v2/bson"
 	"fmt"
+	"github.com/robfig/cron"
+	"log"
 )
 
 type UserTest struct {
@@ -38,7 +40,7 @@ func TestFindUser(t *testing.T)  {
 	fmt.Println(user)
 }
 
-func TestLastTime(t *testing.T)  {
+func TestLast1Time(t *testing.T)  {
 	nTime := time.Now()
 	yesTime := nTime.AddDate(0,0,-1)
 	fmt.Println("----------------y",yesTime.Unix())
@@ -55,5 +57,21 @@ func TestZeroCurDay(t *testing.T)  {
 	tt, _ := time.Parse("2006-01-02", timeStr)
 	timeNumber := tt.Unix()
 	fmt.Println("timeNumber:", timeNumber)
+	fmt.Println("------------timed",int(timeNumber))
 	
 }
+// 对应的星期几 每3s运行一次
+func TestCron(t *testing.T)  {
+	i := 0
+	c := cron.New()
+	spec := "*/3 * * * * 2"
+	c.AddFunc(spec, func() {
+		i++
+		log.Println("cron running:", i)
+	})
+	c.Start()
+
+	time.Sleep(10 *time.Second)
+	//select{}
+}
+

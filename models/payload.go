@@ -24,6 +24,15 @@ func GetPayLoadsByGameId(gameId string,t1,t2 int)(ps []PayLoad, err error)  {
 	return ps, err
 }
 
+func GetPayLoadsByTime(t1, t2 int)(ps []PayLoad, err error)  {
+	conn := mongodb.Conn()
+	defer conn.Close()
+
+	c := conn.DB("ddzhu").C("payload")
+	err = c.Find(bson.M{"create_time":bson.M{"$gte":t1,"$lte":t2}}).All(&ps)
+	return ps, err
+}
+
 func DeletePayLoadsLowDate(t int)(error)  {
 	conn := mongodb.Conn()
 	defer conn.Close()

@@ -3,6 +3,7 @@ package models
 import (
 	"daozhoumj/models/mongodb"
 	"gopkg.in/mgo.v2/bson"
+	"fmt"
 )
 
 //获取玩家真实的个人信息
@@ -38,7 +39,11 @@ func UpsertAchiment(a *Achiment)error  {
 	defer conn.Close()
 
 	c := conn.DB("ddzhu").C("achievements")
-	err := c.UpdateId(bson.M{"_id":a.Id},a)
+	changeInfo,err := c.Upsert(bson.M{"_id":a.Id},a)
+	if err != nil{
+		return err
+	}
+	fmt.Printf("%+v\n", changeInfo)
 	return err
 }
 //翻页获取用户数据
