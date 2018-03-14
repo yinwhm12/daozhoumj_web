@@ -120,12 +120,13 @@ type DearGamers struct {
 type OneData struct {
 	UserData UserInfo `json:"user_data"`
 	Dears []DearGamers `json:"dears"`
+	Achievement models.Achiment `json:"achievement"`
 }
 
 // @Title get a gamer info
-// @router /:id [get]
+// @router /getOne [get]
 func (c *GamersController)GetOne()  {
-	id := c.Ctx.Input.Param(":id")
+	id := c.GetString("id")
 	u,err := models.GetUserByGameId(id)
 	if err != nil{
 		c.RespJSON(bean.CODE_Params_Err,err.Error())
@@ -138,10 +139,25 @@ func (c *GamersController)GetOne()  {
 		oneData.UserData.Gold = u.Gold
 		oneData.UserData.NickName = u.NickName
 		oneData.UserData.HeadImgUrl = u.HeadImgUrl
+
+		//获取其贡献度等数据
+		myAchi, err := models.GetAchievemetById(id)
+		if err != nil{
+			oneData.Achievement = models.Achiment{
+				Id:id,
+				Achievements:0,
+				Commision:0,
+				Degree:0,
+			}
+		}else{
+			oneData.Achievement = *myAchi
+		}
 		//获取其直属 用户
 		myclient, err := models.GetMyClientByGameId(id)
 		if err!= nil{
-			c.RespJSON(bean.CODE_Bad_Request,err.Error())
+			//主推玩家没有
+			oneData.Dears = []DearGamers{}
+			c.RespJSON(bean.CODE_Success,oneData)
 			return
 		}
 		if myclient != nil{
@@ -149,20 +165,21 @@ func (c *GamersController)GetOne()  {
 				dears := make([]DearGamers, len(myclient.Sons))
 				for i, v := range myclient.Sons{
 					av, err := models.GetAchievemetById(v)
+					dears[i].GameId = v
 					if err != nil{
 						//todo 有错误需处理
-						dears[i] = DearGamers{}
+						dears[i].Assert =0
 					}else{
-						dears[i].GameId = v
 						dears[i].Assert = av.Achievements
-						duser, err := models.GetUserByGameId(v)
-						if err != nil{
-							//todo 有问题
-						}else{
-							dears[i].HeadImgUrl = duser.HeadImgUrl
-							dears[i].NickName = duser.NickName
-						}
-
+					}
+					duser, err := models.GetUserByGameId(v)
+					if err != nil{
+						//todo 有问题 找不到玩家信息
+						dears[i].HeadImgUrl =""
+						dears[i].NickName = ""
+					}else{
+						dears[i].HeadImgUrl = duser.HeadImgUrl
+						dears[i].NickName = duser.NickName
 					}
 				}
 				oneData.Dears = dears
