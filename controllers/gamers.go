@@ -214,6 +214,7 @@ func (c *GamersController)EditGold()  {
 		//减
 		if user.Gold - editData.Value < 0{
 			c.RespJSON(bean.CODE_Bad_Request,"该玩家账户不足:"+strconv.Itoa(editData.Value)+"金币")
+			return
 		}
 		user.Gold = user.Gold -editData.Value
 	}else if editData.Type == 1{
@@ -247,7 +248,8 @@ func (c *GamersController)EditDiamond()  {
 	if editData.Type == 2{
 		//减
 		if user.Diamond - editData.Value < 0{
-			c.RespJSON(bean.CODE_Bad_Request,"该玩家账户不足:"+strconv.Itoa(editData.Value)+"金币")
+			c.RespJSON(bean.CODE_Bad_Request,"该玩家账户不足:"+strconv.Itoa(editData.Value)+"钻石")
+			return
 		}
 		user.Diamond = user.Diamond -editData.Value
 	}else if editData.Type == 1{

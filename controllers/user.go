@@ -86,7 +86,7 @@ func (u *UserController) Get() {
 // @Param	body		body 	models.User	true		"body for user content"
 // @Success 200 {object} models.User
 // @Failure 403 :uid is not int
-// @router / [put]
+// @router /editPwd [put]
 func (u *UserController) Put() {
 	type PwdMsg struct {
 		OldPwd string `json:"old_pwd"`
@@ -96,13 +96,13 @@ func (u *UserController) Put() {
 	var pwdMsg PwdMsg
 	json.Unmarshal(u.Ctx.Input.RequestBody, &pwdMsg)
 	if pwdMsg.NewPwd== "" ||pwdMsg.OldPwd ==""{
-		u.RespJSON(http.StatusBadRequest,"one or more params empty ")
+		u.RespJSON(http.StatusBadRequest,"参数不能为空!")
 		return
 	}
 	uid := u.Uid()
 	m,err := models.ValidateOkByMDAdnId(uid,pwdMsg.OldPwd)
 	if err != nil{
-		u.RespJSON(http.StatusForbidden,"password not right")
+		u.RespJSON(http.StatusForbidden,"原始密码不正确!")
 		return
 	}
 	err = models.UpdateMd5(pwdMsg.NewPwd,uid)

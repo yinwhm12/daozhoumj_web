@@ -2,7 +2,6 @@ package mongodb
 
 import (
 	"gopkg.in/mgo.v2"
-	"fmt"
 )
 
 var session *mgo.Session
@@ -16,7 +15,7 @@ func init() {
 	//db := beego.AppConfig.String("mongodb::db")
 	//todo test使用
 	url := "39.107.65.67:27777"
-	fmt.Println("----url:",url)
+	//fmt.Println("----url:",url)
 	sess, err := mgo.Dial(url)
 	if err != nil{
 		panic(err)

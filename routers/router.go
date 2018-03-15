@@ -49,6 +49,10 @@ func init() {
 			beego.NSInclude(
 				&controllers.PublicController{},
 			),
+		),beego.NSNamespace("/gamers",
+			beego.NSInclude(
+				&controllers.GamersController{},
+			),
 		),
 
 	)
