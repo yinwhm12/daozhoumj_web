@@ -46,3 +46,17 @@ type PageByTime struct {
 	After int `json:"after,omitempty"`
 
 } 
+
+//修改金币
+type EditGoldParams struct {
+	Id string `json:"id"`
+	Value int `json:"value"`
+	Type int `json:"type"`
+}
+
+//修改钻石的数量
+type EditDiamodParams struct {
+	Id string `json:"id"`
+	Value int `json:"value"`
+	Type int `json:"type"`
+}

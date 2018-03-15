@@ -4,6 +4,9 @@ import (
 	"daozhoumj/models"
 	"net/http"
 	"daozhoumj/models/bean"
+	"daozhoumj/models/client"
+	"encoding/json"
+	"strconv"
 )
 
 //玩家信息
@@ -192,5 +195,73 @@ func (c *GamersController)GetOne()  {
 	}
 
 
+}
+
+// @Title edit Gold
+// @router /editGold [put]
+func (c *GamersController)EditGold()  {
+	var editData client.EditGoldParams
+	err := json.Unmarshal(c.Ctx.Input.RequestBody,&editData); if err != nil{
+		c.RespJSON(bean.CODE_Params_Err,err.Error())
+		return
+	}
+	user, err := models.GetUserByGameId(editData.Id)
+	if err != nil{
+		c.RespJSON(bean.CODE_Bad_Request,"游戏ID有误，该玩家不存在!")
+		return
+	}
+	if editData.Type == 2{
+		//减
+		if user.Gold - editData.Value < 0{
+			c.RespJSON(bean.CODE_Bad_Request,"该玩家账户不足:"+strconv.Itoa(editData.Value)+"金币")
+		}
+		user.Gold = user.Gold -editData.Value
+	}else if editData.Type == 1{
+		user.Gold = user.Gold + editData.Value
+	}else{
+		c.RespJSON(bean.CODE_Bad_Request,"请求参数不正确!")
+		return
+	}
+	err = models.EditUserGoldByGameId(editData.Id,user.Gold)
+	if err != nil{
+		//写入失败
+		c.RespJSON(bean.CODE_Bad_Request,"请检查网络!")
+		return
+	}
+	c.RespJSON(bean.CODE_Success,"操作成功!")
+}
+
+// @Title edit diamonds
+// @router /editDiamond [put]
+func (c *GamersController)EditDiamond()  {
+	var editData client.EditDiamodParams
+	err := json.Unmarshal(c.Ctx.Input.RequestBody,&editData); if err != nil{
+		c.RespJSON(bean.CODE_Params_Err,err.Error())
+		return
+	}
+	user, err := models.GetUserByGameId(editData.Id)
+	if err != nil{
+		c.RespJSON(bean.CODE_Bad_Request,"游戏ID有误，该玩家不存在!")
+		return
+	}
+	if editData.Type == 2{
+		//减
+		if user.Diamond - editData.Value < 0{
+			c.RespJSON(bean.CODE_Bad_Request,"该玩家账户不足:"+strconv.Itoa(editData.Value)+"金币")
+		}
+		user.Diamond = user.Diamond -editData.Value
+	}else if editData.Type == 1{
+		user.Diamond = user.Diamond + editData.Value
+	}else{
+		c.RespJSON(bean.CODE_Bad_Request,"请求参数不正确!")
+		return
+	}
+	err = models.EditUserDiamondsByGameId(editData.Id,user.Diamond)
+	if err != nil{
+		//写入失败
+		c.RespJSON(bean.CODE_Bad_Request,"请检查网络!")
+		return
+	}
+	c.RespJSON(bean.CODE_Success,"操作成功!")
 }
 
