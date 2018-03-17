@@ -33,6 +33,6 @@ func TestDiKui(t *testing.T)  {
 	 testM["o"] = 10
 	 testM["m"] = 12
 	 testM["n"] = 5
-
+	 fmt.Println("-----------ff:",testM["ww"])
 
 }

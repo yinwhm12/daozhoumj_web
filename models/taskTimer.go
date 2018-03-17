@@ -1,33 +1,33 @@
 package models
 
 import (
-	"sync"
 	"time"
 	"github.com/robfig/cron"
 	"log"
 )
 
-type OriginData struct {
-	//记录原始数据
-	mux sync.RWMutex
-	userPayLoadMap map[string]int
-}
+//type OriginData struct {
+//	//记录原始数据
+//	//mux sync.RWMutex
+//	userPayLoadMap map[string]int
+//}
 
 var originData = struct {
-	sync.RWMutex
+	//sync.RWMutex
 	userPayLoadMap map[string]int
 }{userPayLoadMap:make(map[string]int)}
 
 //init
-func newOriginData(limit int)(*OriginData)  {
-	originData := new(OriginData)
-	originData.userPayLoadMap = make(map[string]int,limit)
-	return originData
-}
+//func newOriginData(limit int)(*OriginData)  {
+//	originData := new(OriginData)
+//	originData.userPayLoadMap = make(map[string]int,limit)
+//	return originData
+//}
 
 func init() {
 	c := cron.New()
 	spe := "0 0 2 * * 1" //每周二 凌晨2点更新数据
+	spe2 := "0 0 0 * * 2" //每周三 凌晨0点 将上一周以及之前的战绩数据删除
 	//spe := "*/5 * * * * ?"
 	c.AddFunc(spe, func() {
 		timestr := time.Now().Format("2006-01-02")
@@ -38,6 +38,13 @@ func init() {
 		UpdateEveryWeekDayTask(int(t1),int(t2))
 		//fmt.Println("============Hello-======")
 	})
+
+	c.AddFunc(spe2, func() {
+		t0 := int(time.Now().Unix())
+		t1 := t0 - 60*60*24*2
+		DeleteBeforeThisWeekData(t1)
+	})
+
 	c.Start()
 }
 
@@ -46,10 +53,10 @@ func init() {
 func UpdateEveryWeekDayTask(t1,t2 int)  {
 	//获取所有的玩家自己的贡献
 	i := 0
-	limit := 500
+	limit := 200
 	offset := 0
 	//originData := new(OriginData)
-	//originData.userPayLoadMap = make(map[string]int,100)
+	originData.userPayLoadMap = make(map[string]int,limit)
 	for{
 		users, err :=  GetLimitMoreUser(offset,limit)
 		if err != nil{
@@ -116,6 +123,7 @@ func UpdateEveryWeekDayTask(t1,t2 int)  {
 		err  := UpsertAchiment(&ac)
 		if err != nil{
 			//fmt.Println("--------fail write--",err)
+			continue
 		}
 		if ac.Commision >0 {
 			//更新用户的金额
@@ -155,7 +163,7 @@ func closeInit()  {
 //}
 
 var sumData = struct {
-	sync.RWMutex
+	//sync.RWMutex
 	sum map[string]int
 }{sum:make(map[string]int)}
 
@@ -185,7 +193,10 @@ func DiKui(gameId string)(int)  {
 		return 0
 	}
 	if myclient == nil || len(myclient.Sons) == 0{
-		return originData.userPayLoadMap[gameId]
+		if v,ok := originData.userPayLoadMap[gameId]; ok{
+			return  v
+		}
+		return 0
 	}else{
 		for _, v := range myclient.Sons{
 			sumData.sum[gameId]+=DiKui(v)
@@ -233,22 +244,23 @@ func ResultTheWeek(gameId string)(float32)  {
 		myclient, err := GetMyClientByGameId(gameId)
 		if err != nil{
 			//fmt.Println("-----------------result--week:",err)
-			if v, ok := sumData.sum[gameId]; ok{
+			if v, ok := originData.userPayLoadMap[gameId]; ok{
 				return SwitCompute(bi,v)
 			}
 			return 0
 		}
 		if myclient == nil || len(myclient.Sons) == 0{
 			//没有直推的玩家
-			if v, ok := sumData.sum[gameId]; ok{
+			if v, ok := originData.userPayLoadMap[gameId]; ok{
 				return SwitCompute(bi,v)
 			}
 			return 0
 		}else{
-
+			//自己的贡献
+			sum += float32(originData.userPayLoadMap[gameId]) * bi
 			for _, v := range myclient.Sons{
 				//if vv, ok :=originData.userPayLoadMap[v]; ok{
-					sum += float32(sumData.sum[v]) * bi
+					sum += float32(originData.userPayLoadMap[v]) * bi
 					sum += ResultOne(v,bi)
 					/*
 
@@ -280,13 +292,14 @@ func ResultTheWeek(gameId string)(float32)  {
 func ResultOne(gameId string,bi float32)(float32)  {
 	myclient, err := GetMyClientByGameId(gameId)
 	if err != nil{
-		if v, ok := sumData.sum[gameId]; ok{
-			return SwitCompute(bi,v)
-		}
+		//if v, ok := sumData.sum[gameId]; ok{
+		//	return SwitCompute(bi,v)
+		//}
 		return 0
 	}
 	if myclient == nil || len(myclient.Sons) == 0{
-		return SwitCompute(bi,originData.userPayLoadMap[gameId])
+		//return SwitCompute(bi,originData.userPayLoadMap[gameId])
+		return 0
 	}else{
 		var sum float32
 		for _, v := range myclient.Sons{
