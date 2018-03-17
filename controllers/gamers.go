@@ -212,13 +212,13 @@ func (c *GamersController)EditGold()  {
 	}
 	if editData.Type == 2{
 		//减
-		if user.Gold - editData.Value < 0{
+		if user.Gold - editData.Value * 100< 0{
 			c.RespJSON(bean.CODE_Bad_Request,"该玩家账户不足:"+strconv.Itoa(editData.Value)+"金币")
 			return
 		}
-		user.Gold = user.Gold -editData.Value
+		user.Gold = user.Gold -editData.Value * 100
 	}else if editData.Type == 1{
-		user.Gold = user.Gold + editData.Value
+		user.Gold = user.Gold + editData.Value * 100
 	}else{
 		c.RespJSON(bean.CODE_Bad_Request,"请求参数不正确!")
 		return
