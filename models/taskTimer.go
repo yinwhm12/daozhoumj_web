@@ -100,19 +100,19 @@ func UpdateEveryWeekDayTask(t1,t2 int)  {
 		}
 		if c, ok := sumData.sum[k]; ok{
 			ac.Achievements = c
-			if c < 10000{
+			if c < 10000 * 100{
 				ac.Degree = 0
 				ac.Commision = 0
 			}else {
-				if c <= 30 *10000{
+				if c <= 30 *10000 * 100{
 					ac.Degree = 1
-				}else if c <= 100 *10000{
+				}else if c <= 100 *10000 *100{
 					ac.Degree = 2
-				}else if c <= 200 *10000{
+				}else if c <= 200 *10000 *100{
 					ac.Degree = 3
-				}else if c <= 500 * 10000{
+				}else if c <= 500 * 10000 *100{
 					ac.Degree = 4
-				}else if c <= 1000 * 10000{
+				}else if c <= 1000 * 10000 *100{
 					ac.Degree = 5
 				}else {
 					ac.Degree = 5
@@ -208,23 +208,23 @@ func DiKui(gameId string)(int)  {
 }
 
 func getBi(assert int)float32  {
-	if assert < 10000{
+	if assert < 10000 * 100{
 		//return (bi - 0.006) * float32(assert)
 		return 0
 
-	}else if assert <=30 *10000{
+	}else if assert <=30 *10000 *100{
 
 		return 0.006 + 0.01
-	}else if assert <=100 *10000{
+	}else if assert <=100 *10000 * 100{
 
 		return 0.008 + 0.01
-	}else if assert <=200 * 10000{
+	}else if assert <=200 * 10000 *100{
 
 		return 0.01 + 0.01
-	}else if assert <= 500 * 10000{
+	}else if assert <= 500 * 10000 *100{
 
 		return 0.013 + 0.01
-	}else if assert <= 1000 *10000 {
+	}else if assert <= 1000 *10000 * 100{
 		return 0.016 + 0.01
 	}else{
 		return 0.02 + 0.01
@@ -312,23 +312,23 @@ func ResultOne(gameId string,bi float32)(float32)  {
 }
 
 func SwitCompute(bi float32,assert int)(float32)  {
-	if assert < 10000{
+	if assert < 10000 * 100{
 		//return (bi - 0.006) * float32(assert)
 		return 0
 
-	}else if assert <=30 *10000{
+	}else if assert <=30 *10000 *100{
 
 		return (bi - 0.006) * float32(assert)
-	}else if assert <=100 *10000{
+	}else if assert <=100 *10000 *100{
 
 		return (bi - 0.008) * float32(assert)
-	}else if assert <=200 * 10000{
+	}else if assert <=200 * 10000 *100{
 
 		return (bi - 0.01) * float32(assert)
-	}else if assert <= 500 * 10000{
+	}else if assert <= 500 * 10000 *100{
 
 		return (bi - 0.013) * float32(assert)
-	}else if assert <= 100 *10000 {
+	}else if assert <= 100 *10000 *100 {
 		return (bi - 0.016) * float32(assert)
 	}else{
 		return (bi - 0.02) * float32(assert)
